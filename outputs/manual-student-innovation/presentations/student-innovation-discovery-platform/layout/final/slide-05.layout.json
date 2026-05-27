@@ -1,0 +1,1282 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/l6h98c",
+    "id": "l6h98c",
+    "slide": 5,
+    "layoutId": "d1ace526-b41b-422a-9a5a-9edbba189ea8",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "a9b9f85f-fc86-4b41-abc5-0317626c256c",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#F2F0EA",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Aptos",
+      "Aptos Display"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "d1ace526-b41b-422a-9a5a-9edbba189ea8",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "a9b9f85f-fc86-4b41-abc5-0317626c256c",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "a9b9f85f-fc86-4b41-abc5-0317626c256c",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u18jqh0f",
+      "id": "1",
+      "name": "slide card shadow",
+      "bbox": [
+        52,
+        44,
+        1188,
+        644
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#DED9CE"
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1orytsvu",
+      "id": "2",
+      "name": "slide card",
+      "bbox": [
+        46,
+        38,
+        1188,
+        644
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7u54zid",
+      "id": "3",
+      "name": "orange title accent",
+      "bbox": [
+        88,
+        74,
+        8,
+        34
+      ],
+      "geometry": "rect",
+      "fillColor": "#F47A1F"
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/judg7ads",
+      "id": "4",
+      "bbox": [
+        108,
+        66,
+        760,
+        58
+      ],
+      "geometry": "rect",
+      "text": "Value proposition",
+      "textPreview": "Value proposition",
+      "resolvedFontSize": 35,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 35,
+        "typeface": "Aptos Display",
+        "color": "#11110F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Value proposition"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Value proposition",
+          "resolvedTextStyle": {
+            "fontSize": 35,
+            "typeface": "Aptos Display",
+            "color": "#11110F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Value proposition",
+              "fontSize": 35,
+              "typeface": "Aptos Display",
+              "color": "#11110F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u9knih4b",
+      "id": "5",
+      "name": "For students shadow",
+      "bbox": [
+        98,
+        156,
+        318,
+        156
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#DED9CE"
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1032lszq",
+      "id": "6",
+      "name": "For students",
+      "bbox": [
+        94,
+        152,
+        318,
+        156
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cfa9w3m9",
+      "id": "7",
+      "bbox": [
+        112,
+        170,
+        28,
+        8
+      ],
+      "geometry": "rect",
+      "fillColor": "#F47A1F"
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nyd0z610",
+      "id": "8",
+      "bbox": [
+        114,
+        182,
+        278,
+        34
+      ],
+      "geometry": "rect",
+      "text": "For students",
+      "textPreview": "For students",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Aptos Display",
+        "color": "#11110F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "For students"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "For students",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "typeface": "Aptos Display",
+            "color": "#11110F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "For students",
+              "fontSize": 24,
+              "typeface": "Aptos Display",
+              "color": "#11110F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/udg7adsj",
+      "id": "9",
+      "bbox": [
+        114,
+        224,
+        278,
+        66
+      ],
+      "geometry": "rect",
+      "text": "Protect the idea and keep momentum.",
+      "textPreview": "Protect the idea and keep momentum.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#6C675F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Protect the idea and keep momentum."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Protect the idea and keep momentum.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#6C675F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Protect the idea and keep momentum.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#6C675F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/czed8v6p",
+      "id": "10",
+      "bbox": [
+        333,
+        162,
+        34,
+        34
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5kb6xkf6",
+      "id": "11",
+      "bbox": [
+        342,
+        172,
+        4,
+        4
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#171715"
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ytsvu9kn",
+      "id": "12",
+      "bbox": [
+        354,
+        172,
+        4,
+        4
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#171715"
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/neloj2t8",
+      "id": "13",
+      "bbox": [
+        320,
+        198,
+        60,
+        52
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cbulwval",
+      "id": "14",
+      "bbox": [
+        306,
+        241,
+        88,
+        16
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F47A1F",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5sneloj2",
+      "id": "15",
+      "name": "For mentors shadow",
+      "bbox": [
+        480,
+        156,
+        318,
+        156
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#DED9CE"
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u54zidon",
+      "id": "16",
+      "name": "For mentors",
+      "bbox": [
+        476,
+        152,
+        318,
+        156
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nqxs72x4",
+      "id": "17",
+      "bbox": [
+        494,
+        170,
+        28,
+        8
+      ],
+      "geometry": "rect",
+      "fillColor": "#64A8FF"
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gbq1oryt",
+      "id": "18",
+      "bbox": [
+        496,
+        182,
+        278,
+        34
+      ],
+      "geometry": "rect",
+      "text": "For mentors",
+      "textPreview": "For mentors",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Aptos Display",
+        "color": "#11110F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "For mentors"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "For mentors",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "typeface": "Aptos Display",
+            "color": "#11110F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "For mentors",
+              "fontSize": 24,
+              "typeface": "Aptos Display",
+              "color": "#11110F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5wjudg7a",
+      "id": "19",
+      "bbox": [
+        496,
+        224,
+        278,
+        66
+      ],
+      "geometry": "rect",
+      "text": "Validate originality, feasibility, and next steps.",
+      "textPreview": "Validate originality, feasibility, and next steps.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#6C675F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Validate originality, feasibility, and next"
+          },
+          {
+            "index": 2,
+            "text": "steps."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Validate originality, feasibility, and next steps.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#6C675F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Validate originality, feasibility, and next steps.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#6C675F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t47y1kre",
+      "id": "20",
+      "bbox": [
+        703,
+        193,
+        50,
+        36
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#64A8FF",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0je9cvix",
+      "id": "21",
+      "bbox": [
+        716,
+        205,
+        24,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/byhgn29g",
+      "id": "22",
+      "bbox": [
+        716,
+        216,
+        18,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/idonyd0z",
+      "id": "23",
+      "name": "For investors shadow",
+      "bbox": [
+        862,
+        156,
+        318,
+        156
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#DED9CE"
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tcj6tova",
+      "id": "24",
+      "name": "For investors",
+      "bbox": [
+        858,
+        152,
+        318,
+        156
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0rqd4vmt",
+      "id": "25",
+      "bbox": [
+        876,
+        170,
+        28,
+        8
+      ],
+      "geometry": "rect",
+      "fillColor": "#DFFF42"
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b6xkf6dc",
+      "id": "26",
+      "bbox": [
+        878,
+        182,
+        278,
+        34
+      ],
+      "geometry": "rect",
+      "text": "For investors",
+      "textPreview": "For investors",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Aptos Display",
+        "color": "#11110F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "For investors"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "For investors",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "typeface": "Aptos Display",
+            "color": "#11110F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "For investors",
+              "fontSize": 24,
+              "typeface": "Aptos Display",
+              "color": "#11110F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/il0rqd4v",
+      "id": "27",
+      "bbox": [
+        878,
+        224,
+        278,
+        66
+      ],
+      "geometry": "rect",
+      "text": "Review trusted early opportunities.",
+      "textPreview": "Review trusted early opportunities.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#6C675F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Review trusted early opportunities."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Review trusted early opportunities.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#6C675F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Review trusted early opportunities.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#6C675F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tovahoza",
+      "id": "28",
+      "bbox": [
+        1086,
+        178,
+        50,
+        50
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#DFFF42",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/032lszqt",
+      "id": "29",
+      "bbox": [
+        1102,
+        193,
+        18,
+        20
+      ],
+      "geometry": "rect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ex0nuxc3",
+      "id": "30",
+      "bbox": [
+        1106,
+        184,
+        12,
+        12
+      ],
+      "geometry": "triangle",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#171715",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3itgfmlk",
+      "id": "31",
+      "bbox": [
+        136,
+        392,
+        1008,
+        206
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F6F3EA",
+      "lineColor": "#171715",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/w3m94fu1",
+      "id": "32",
+      "bbox": [
+        196,
+        415,
+        820,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Student trust",
+      "textPreview": "Student trust",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#11110F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Student trust"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Student trust",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#11110F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Student trust",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#11110F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/loj2t83i",
+      "id": "33",
+      "bbox": [
+        196,
+        442,
+        820,
+        24
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EBE7DE",
+      "lineColor": "#171715",
+      "lineWidth": 1
+    },
+    {
+      "order": 34,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e9cvixcz",
+      "id": "34",
+      "bbox": [
+        201,
+        447,
+        426.4,
+        14
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F47A1F"
+    },
+    {
+      "order": 35,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3q5o7qpg",
+      "id": "35",
+      "bbox": [
+        196,
+        475,
+        820,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Mentor signal",
+      "textPreview": "Mentor signal",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#11110F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Mentor signal"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Mentor signal",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#11110F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Mentor signal",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#11110F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 36,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wb2hwfyx",
+      "id": "36",
+      "bbox": [
+        196,
+        502,
+        820,
+        24
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EBE7DE",
+      "lineColor": "#171715",
+      "lineWidth": 1
+    },
+    {
+      "order": 37,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lwval87e",
+      "id": "37",
+      "bbox": [
+        201,
+        507,
+        557.6,
+        14
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#64A8FF"
+    },
+    {
+      "order": 38,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ahoza1gv",
+      "id": "38",
+      "bbox": [
+        196,
+        535,
+        820,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Investor confidence",
+      "textPreview": "Investor confidence",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#11110F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Investor confidence"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Investor confidence",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#11110F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Investor confidence",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#11110F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 39,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/32lszqtc",
+      "id": "39",
+      "bbox": [
+        196,
+        562,
+        820,
+        24
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EBE7DE",
+      "lineColor": "#171715",
+      "lineWidth": 1
+    },
+    {
+      "order": 40,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7u54zido",
+      "id": "40",
+      "bbox": [
+        201,
+        567,
+        647.8,
+        14
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#DFFF42"
+    },
+    {
+      "order": 41,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ed8bat47",
+      "id": "41",
+      "bbox": [
+        742,
+        330,
+        360,
+        36
+      ],
+      "geometry": "rect",
+      "text": "Trust is earned through controlled access and visible validation, not open-ended exposure.",
+      "textPreview": "Trust is earned through controlled access and visible validation, not open-ended exposure.",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "Aptos",
+        "color": "#6C675F",
+        "bold": true,
+        "alignment": "right",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Trust is earned through controlled access and visible"
+          },
+          {
+            "index": 2,
+            "text": "validation, not open-ended exposure."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Trust is earned through controlled access and visible validation, not open-ended exposure.",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Aptos",
+            "color": "#6C675F",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Trust is earned through controlled access and visible validation, not open-ended exposure.",
+              "fontSize": 14,
+              "typeface": "Aptos",
+              "color": "#6C675F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

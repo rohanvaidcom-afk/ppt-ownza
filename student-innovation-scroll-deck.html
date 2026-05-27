@@ -1,0 +1,2587 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Innovation Discovery Platform - Scroll Deck</title>
+  <style>
+    :root {
+      --bg: #f0eee7;
+      --card: #fffdfa;
+      --paper: #f8f5ec;
+      --ink: #10100e;
+      --muted: #6e685f;
+      --line: #151512;
+      --soft-line: #d9d3c8;
+      --shadow: #d9d4c8;
+      --lime: #ddff35;
+      --lime-soft: #efffa2;
+      --orange: #ff7a1a;
+      --blue: #64a8ff;
+      --mint: #c3f0d8;
+      --dark: #10110e;
+      --dark-2: #1b1c17;
+      --radius: 26px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(16,16,14,.035) 1px, transparent 1px) 0 0 / 56px 56px,
+        linear-gradient(0deg, rgba(16,16,14,.025) 1px, transparent 1px) 0 0 / 56px 56px,
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .rail {
+      position: fixed;
+      z-index: 30;
+      left: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      gap: 10px;
+    }
+
+    .rail a {
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      box-shadow: 2px 2px 0 var(--shadow);
+    }
+
+    .rail a:first-child,
+    .rail a:hover { background: var(--lime); }
+
+    .topbar {
+      position: fixed;
+      z-index: 30;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 250, .82);
+      box-shadow: 4px 4px 0 var(--shadow);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .topbar .mark {
+      width: 28px;
+      height: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--lime);
+    }
+
+    .scene {
+      min-height: 100svh;
+      padding: 74px 48px 54px;
+      display: grid;
+      place-items: center;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .slide {
+      width: min(1180px, 92vw);
+      aspect-ratio: 16 / 9;
+      max-height: 82vh;
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 10px 10px 0 var(--shadow);
+      padding: 48px 58px;
+    }
+
+    .slide.dark {
+      background: var(--dark);
+      color: var(--card);
+      border-color: var(--dark);
+      box-shadow: 10px 10px 0 #d7d1c5;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: auto 42px 26px auto;
+      width: 82px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--lime);
+      opacity: .9;
+    }
+
+    .dark::after { background: var(--lime); }
+
+    .accent {
+      width: 8px;
+      height: 34px;
+      background: var(--orange);
+      display: inline-block;
+      margin-right: 12px;
+      vertical-align: -6px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: 54px;
+      line-height: .98;
+      max-width: 560px;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+
+    h2 {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 20px;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .sub {
+      margin-top: 26px;
+      max-width: 470px;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.18;
+      font-weight: 600;
+    }
+
+    .dark .sub,
+    .dark .muted { color: #cfcabf; }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.28;
+      font-weight: 650;
+    }
+
+    .tiny {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.15;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .headline-highlight {
+      display: inline;
+      background: linear-gradient(transparent 48%, var(--lime) 48% 82%, transparent 82%);
+      padding-right: 7px;
+    }
+
+    .layout-2 {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 58px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .mini-card,
+    .panel,
+    .stat,
+    .step,
+    .comparison-card {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+
+    .label-card {
+      width: 420px;
+      margin-top: 54px;
+      padding: 18px 22px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: var(--paper);
+      box-shadow: 4px 4px 0 var(--shadow);
+      position: relative;
+    }
+
+    .label-card::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      top: 22px;
+      width: 54px;
+      height: 14px;
+      border: 1.5px solid var(--line);
+      background: var(--lime);
+    }
+
+    .phone {
+      width: 330px;
+      height: 540px;
+      margin-left: auto;
+      border: 22px solid var(--dark);
+      border-radius: 48px;
+      background: #fbf8ef;
+      box-shadow: 16px 18px 0 var(--shadow);
+      padding: 30px 24px;
+      position: relative;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      width: 70px;
+      height: 7px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #2a2a24;
+    }
+
+    .dot-row { display: flex; gap: 7px; align-items: center; }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid var(--line);
+      border-radius: 99px;
+      background: var(--lime);
+    }
+    .dot.orange { background: var(--orange); }
+    .dot.blue { background: var(--blue); }
+    .dot.mint { background: var(--mint); }
+
+    .phone-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      font-size: 9px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .notify {
+      min-height: 78px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: var(--card);
+      box-shadow: 3px 3px 0 #e5ded2;
+      padding: 16px;
+      margin-bottom: 17px;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .ui-line {
+      height: 4px;
+      background: var(--line);
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+    .ui-line.thin { height: 2px; background: #b9b0a4; width: 70%; }
+
+    .lime-block {
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: var(--lime);
+      padding: 22px 20px;
+      margin: 8px 0 20px;
+    }
+
+    .progress {
+      height: 22px;
+      border: 1.5px solid var(--line);
+      border-radius: 5px;
+      background: #f6f1e6;
+      overflow: hidden;
+    }
+    .progress span {
+      display: block;
+      height: 100%;
+      width: var(--w, 64%);
+      background: var(--c, var(--lime));
+    }
+
+    .phone-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .hero-slide {
+      padding: 40px 50px;
+    }
+
+    .hero-slide h1 {
+      font-size: 48px;
+      max-width: 530px;
+    }
+
+    .hero-slide .sub {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    .hero-slide .label-card {
+      margin-top: 30px;
+    }
+
+    .hero-slide .source-strip {
+      margin-top: 16px;
+    }
+
+    .hero-slide .phone {
+      width: 306px;
+      height: 502px;
+      padding: 26px 22px;
+    }
+
+    .icon-tile {
+      min-height: 52px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      display: grid;
+      place-items: center;
+    }
+
+    .bulb {
+      width: 34px;
+      height: 34px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--lime-soft);
+      position: relative;
+    }
+    .bulb::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      bottom: -9px;
+      width: 14px;
+      height: 13px;
+      border: 1.5px solid var(--line);
+      border-radius: 3px;
+      background: var(--card);
+    }
+
+    .doc {
+      width: 36px;
+      height: 44px;
+      border: 1.5px solid var(--line);
+      border-radius: 7px;
+      background: var(--mint);
+      position: relative;
+    }
+    .doc::before {
+      content: "";
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      width: 12px;
+      height: 12px;
+      clip-path: polygon(0 0, 100% 100%, 0 100%);
+      border-left: 1.5px solid var(--line);
+      background: var(--card);
+    }
+    .doc::after {
+      content: "";
+      position: absolute;
+      left: 9px;
+      top: 19px;
+      width: 17px;
+      height: 12px;
+      border-top: 1.5px solid var(--line);
+      border-bottom: 1.5px solid var(--line);
+    }
+
+    .person {
+      width: 58px;
+      height: 82px;
+      position: relative;
+    }
+    .person::before {
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid var(--line);
+      border-radius: 50%;
+      background: var(--card);
+      box-shadow: inset 7px 9px 0 -6px var(--line), inset -7px 9px 0 -6px var(--line);
+    }
+    .person::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      bottom: 0;
+      width: 48px;
+      height: 46px;
+      border: 1.5px solid var(--line);
+      border-radius: 9px 9px 0 0;
+      background: var(--card);
+    }
+    .person .base {
+      position: absolute;
+      z-index: 2;
+      left: -7px;
+      bottom: -7px;
+      width: 72px;
+      height: 16px;
+      border: 1.5px solid var(--line);
+      border-radius: 4px;
+      background: var(--accent, var(--orange));
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 44px;
+    }
+
+    .stat {
+      min-height: 128px;
+      padding: 22px;
+      position: relative;
+    }
+    .stat .dash {
+      width: 28px;
+      height: 7px;
+      background: var(--a, var(--orange));
+      margin-bottom: 14px;
+    }
+    .stat .mini-button {
+      position: absolute;
+      right: 22px;
+      top: 30px;
+      width: 42px;
+      height: 42px;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      background: var(--a, var(--orange));
+    }
+    .stat .mini-button::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 20px;
+      width: 19px;
+      height: 2px;
+      background: var(--line);
+    }
+
+    .student-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 34px;
+      margin-top: 70px;
+      align-items: end;
+    }
+    .student-row .person { margin: 0 auto; }
+    .dotted {
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--soft-line), var(--soft-line) 4px, transparent 4px, transparent 8px);
+      align-self: center;
+    }
+
+    .trust-layout {
+      display: grid;
+      grid-template-columns: 370px 1fr;
+      gap: 62px;
+      align-items: center;
+      height: 84%;
+      margin-top: 34px;
+    }
+
+    .stacked-cards {
+      display: grid;
+      gap: 28px;
+    }
+
+    .panel {
+      padding: 22px;
+      min-height: 146px;
+    }
+    .panel .slash {
+      width: 28px;
+      height: 7px;
+      background: var(--a, var(--lime));
+      margin-bottom: 16px;
+    }
+
+    .system-diagram {
+      display: grid;
+      grid-template-columns: 1fr 80px 1.05fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .black-ui {
+      border-radius: 18px;
+      background: var(--dark);
+      border: 1.5px solid var(--line);
+      color: var(--card);
+      padding: 24px;
+      min-height: 180px;
+    }
+    .black-ui .bar {
+      height: 5px;
+      background: var(--c);
+      width: var(--w);
+      margin-top: 20px;
+    }
+
+    .shield {
+      width: 78px;
+      height: 92px;
+      background: var(--lime);
+      border: 2px solid var(--line);
+      clip-path: polygon(50% 0, 100% 22%, 88% 75%, 50% 100%, 12% 75%, 0 22%);
+      position: relative;
+    }
+    .shield::after {
+      content: "";
+      position: absolute;
+      left: 27px;
+      top: 35px;
+      width: 24px;
+      height: 42px;
+      border-right: 5px solid var(--line);
+      border-bottom: 5px solid var(--line);
+      transform: rotate(42deg);
+    }
+
+    .dashboard {
+      min-height: 220px;
+      padding: 26px;
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin: 15px 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .status .dot { border: none; width: 10px; height: 10px; }
+
+    .timeline {
+      margin-top: 54px;
+      padding: 28px;
+      border: 1.5px solid var(--line);
+      border-radius: 22px;
+      background: var(--paper);
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+    .step {
+      padding: 18px 12px 16px;
+      min-height: 164px;
+      display: grid;
+      justify-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .step .circle {
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--a);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 20px;
+    }
+    .step .caption {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .value-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      margin-top: 34px;
+    }
+
+    .mini-card {
+      min-height: 142px;
+      padding: 22px;
+      position: relative;
+    }
+    .mini-card .slash {
+      width: 28px;
+      height: 7px;
+      background: var(--a);
+      margin-bottom: 14px;
+    }
+
+    .signal-box {
+      margin: 52px auto 0;
+      width: 80%;
+      padding: 28px 34px 30px;
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+    }
+    .signal { margin: 14px 0 18px; }
+    .signal b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .quad {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 54px;
+    }
+    .quad .panel {
+      min-height: 128px;
+      background: var(--paper);
+      position: relative;
+    }
+    .quad .panel.recovery { background: var(--card); }
+    .loop {
+      position: absolute;
+      right: 28px;
+      top: 42px;
+      width: 54px;
+      height: 28px;
+      border-top: 4px solid var(--a, var(--orange));
+      border-right: 4px solid var(--a, var(--orange));
+      border-radius: 30px 30px 0 0;
+    }
+    .loop::after {
+      content: "";
+      position: absolute;
+      right: -7px;
+      top: -3px;
+      width: 13px;
+      height: 13px;
+      border-right: 4px solid var(--a, var(--orange));
+      border-bottom: 4px solid var(--a, var(--orange));
+      transform: rotate(45deg);
+    }
+
+    .eco-flow {
+      margin-top: 60px;
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 1fr 38px 1fr 38px 1fr 38px 1fr 38px 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+    .flow-node {
+      text-align: center;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 8px;
+      font-weight: 900;
+      background: var(--a);
+    }
+    .flow-node.dark-node { background: var(--dark); color: var(--card); }
+    .arrow {
+      height: 18px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      clip-path: polygon(0 23%, 72% 23%, 72% 0, 100% 50%, 72% 100%, 72% 77%, 0 77%);
+    }
+
+    .growth-box {
+      margin: 36px auto 0;
+      width: 86%;
+      padding: 32px;
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+    }
+
+    .growth-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 42px;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: var(--lime-soft);
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .flywheel {
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 70px;
+      align-items: center;
+      height: 82%;
+      margin-top: 22px;
+    }
+    .wheel {
+      width: 320px;
+      height: 320px;
+      border: 2px solid #d9d6cc;
+      border-radius: 50%;
+      position: relative;
+      margin: 0 auto;
+    }
+    .wheel::before {
+      content: "Chain of\A continuation";
+      white-space: pre;
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 900;
+      color: var(--card);
+    }
+    .wheel-node {
+      position: absolute;
+      width: 58px;
+      height: 58px;
+      border: 2px solid var(--card);
+      border-radius: 50%;
+      background: var(--a);
+      transform: translate(-50%, -50%);
+    }
+    .wheel-node span {
+      position: absolute;
+      top: 66px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--card);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .wheel-node.top { left: 50%; top: 0; }
+    .wheel-node.right { left: 100%; top: 50%; }
+    .wheel-node.bottom { left: 50%; top: 100%; }
+    .wheel-node.left { left: 0; top: 50%; }
+    .chain-list {
+      display: grid;
+      gap: 18px;
+    }
+    .chain-item {
+      border: 1.5px solid #d9d6cc;
+      border-radius: 9px;
+      background: var(--dark-2);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 17px;
+      font-weight: 900;
+    }
+    .chain-item .dot { border: none; }
+
+    .chain-slide {
+      padding: 40px 58px;
+    }
+
+    .chain-slide .flywheel {
+      grid-template-columns: 360px 1fr;
+      gap: 44px;
+      height: calc(100% - 116px);
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .chain-slide .wheel {
+      width: 240px;
+      height: 240px;
+      margin-top: 6px;
+    }
+
+    .chain-slide .wheel::before {
+      font-size: 17px;
+    }
+
+    .chain-slide .wheel-node {
+      width: 46px;
+      height: 46px;
+    }
+
+    .chain-slide .wheel-node span {
+      top: 52px;
+      font-size: 10px;
+    }
+
+    .chain-slide .chain-list {
+      gap: 12px;
+      padding-top: 8px;
+    }
+
+    .chain-slide .chain-item {
+      padding: 14px 18px;
+      font-size: 15px;
+    }
+
+    .chain-slide .cta-strip {
+      left: 96px;
+      right: 96px;
+      bottom: 44px;
+      padding: 12px;
+      font-size: 19px;
+    }
+
+    .cta-strip {
+      position: absolute;
+      left: 88px;
+      right: 88px;
+      bottom: 52px;
+      border: 1.5px solid var(--card);
+      border-radius: 9px;
+      background: var(--lime);
+      color: var(--ink);
+      text-align: center;
+      padding: 14px;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .compare {
+      margin-top: 44px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+    }
+    .comparison-card {
+      min-height: 350px;
+      padding: 34px;
+      position: relative;
+    }
+    .comparison-card.after {
+      background: var(--dark);
+      color: var(--card);
+      border-color: var(--dark);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+    .comparison-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 32px 0 0;
+      display: grid;
+      gap: 18px;
+      font-size: 18px;
+      font-weight: 850;
+    }
+    .comparison-card li {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .comparison-card li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--orange);
+      flex: none;
+    }
+    .after li::before {
+      width: 18px;
+      height: 10px;
+      border-radius: 0;
+      background: transparent;
+      border-left: 3px solid var(--lime);
+      border-bottom: 3px solid var(--lime);
+      transform: rotate(-45deg);
+    }
+    .protected-badge {
+      position: absolute;
+      top: 30px;
+      right: 34px;
+      background: var(--lime);
+      color: var(--ink);
+      border: 1.5px solid var(--card);
+      border-radius: 7px;
+      padding: 9px 18px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .tag-row {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      bottom: 46px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+    .tag {
+      min-width: 92px;
+      border: 1.5px solid var(--line);
+      border-radius: 7px;
+      background: var(--card);
+      padding: 9px 15px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .tag.lime { background: var(--lime-soft); }
+
+    .bottom-note {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      bottom: 50px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .problem-note {
+      bottom: 126px;
+      font-size: 16px;
+    }
+
+    .sustainability-note {
+      bottom: 24px;
+      font-size: 14px;
+    }
+
+    .center-note {
+      margin-top: 34px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .source-strip {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      padding: 8px 13px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .pill.lime { background: var(--lime); }
+    .pill.orange { background: var(--orange); color: var(--card); }
+    .pill.blue { background: var(--blue); }
+
+    .framework-slide {
+      padding: 40px 52px;
+    }
+
+    .framework-title {
+      max-width: 820px;
+      margin-top: 18px;
+    }
+
+    .framework-grid {
+      margin-top: 30px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .framework-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .framework-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .framework-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .framework-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+    .framework-card {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 18px;
+      min-height: 116px;
+      position: relative;
+    }
+
+    .framework-card.paper { background: var(--paper); }
+    .framework-card.dark-card { background: var(--dark); color: var(--card); border-color: var(--dark); }
+
+    .framework-card .slash {
+      width: 28px;
+      height: 7px;
+      background: var(--a, var(--lime));
+      margin-bottom: 14px;
+    }
+
+    .framework-card h3 {
+      font-size: 18px;
+    }
+
+    .framework-card .muted {
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .framework-note {
+      margin-top: 24px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--lime-soft);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 13px 16px;
+      font-size: 14px;
+      line-height: 1.15;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .platform-table {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .platform-cell {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 18px;
+      min-height: 168px;
+    }
+
+    .platform-cell .tiny {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .flow-strip {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 16px 12px;
+      min-height: 150px;
+      text-align: center;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      width: 22px;
+      height: 14px;
+      border: 1.5px solid var(--line);
+      background: var(--a, var(--lime));
+      clip-path: polygon(0 25%, 70% 25%, 70% 0, 100% 50%, 70% 100%, 70% 75%, 0 75%);
+      transform: translateY(-50%);
+      z-index: 3;
+    }
+
+    .flow-step:last-child::after { display: none; }
+
+    .flow-step .num {
+      width: 42px;
+      height: 42px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--a, var(--lime));
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+    }
+
+    .tier-ladder {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .tier-row {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .tier-badge {
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      background: var(--a, var(--lime));
+      padding: 9px 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .builder-slide {
+      padding: 38px 52px;
+    }
+
+    .builder-slide .framework-title {
+      max-width: 760px;
+      font-size: 32px;
+    }
+
+    .builder-slide .tier-ladder {
+      margin-top: 24px;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .builder-slide .tier-row {
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+    }
+
+    .builder-slide .tier-row h3 {
+      font-size: 20px;
+    }
+
+    .builder-slide .tier-row .muted {
+      font-size: 11px;
+      margin-top: 4px;
+      line-height: 1.12;
+    }
+
+    .builder-slide .tier-badge {
+      padding: 8px 6px;
+      font-size: 11px;
+    }
+
+    .builder-slide .idea-map {
+      min-height: 248px !important;
+      padding: 16px;
+      gap: 10px;
+    }
+
+    .builder-slide .idea-step {
+      min-height: 142px;
+      padding: 10px 8px;
+      gap: 8px;
+    }
+
+    .builder-slide .idea-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 15px;
+    }
+
+    .builder-slide .idea-step h3 {
+      font-size: 13px;
+    }
+
+    .builder-slide .framework-note {
+      margin-top: 14px;
+      padding: 10px 14px;
+      font-size: 12px;
+    }
+
+    .metric-bars {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 34px;
+    }
+
+    .metric {
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 16px;
+    }
+
+    .metric .progress {
+      margin-top: 12px;
+      height: 18px;
+    }
+
+    .idea-slide {
+      padding: 36px 48px;
+    }
+
+    .idea-overview {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 46px;
+      align-items: center;
+      height: auto;
+    }
+
+    .idea-thesis {
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: 5px 5px 0 var(--shadow);
+      padding: 18px;
+    }
+
+    .idea-thesis h3 {
+      font-size: 24px;
+    }
+
+    .idea-stack {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .idea-mini {
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      padding: 9px 12px;
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 10px;
+      align-items: center;
+      font-size: 11px;
+      line-height: 1.16;
+      font-weight: 850;
+      color: var(--muted);
+    }
+
+    .idea-mini span {
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      background: var(--a, var(--lime));
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .idea-map {
+      position: relative;
+      min-height: 300px;
+      border: 1.5px solid var(--line);
+      border-radius: 24px;
+      background: var(--card);
+      box-shadow: 6px 6px 0 var(--shadow);
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      align-items: center;
+    }
+
+    .idea-map::before {
+      content: "";
+      position: absolute;
+      left: 70px;
+      right: 70px;
+      top: 50%;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--line), var(--line) 6px, transparent 6px, transparent 12px);
+      transform: translateY(-50%);
+    }
+
+    .idea-step {
+      min-height: 142px;
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 12px 10px;
+      position: relative;
+      z-index: 2;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .idea-icon {
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid var(--line);
+      border-radius: 15px;
+      background: var(--a, var(--lime));
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .idea-step h3 {
+      font-size: 14px;
+    }
+
+    .idea-step .muted {
+      font-size: 10px;
+    }
+
+    .pathway {
+      margin-top: 46px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .path-card {
+      min-height: 230px;
+      padding: 24px;
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: 5px 5px 0 var(--shadow);
+      position: relative;
+    }
+
+    .path-card::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      width: 34px;
+      height: 18px;
+      border: 1.5px solid var(--line);
+      background: var(--a, var(--lime));
+      clip-path: polygon(0 22%, 68% 22%, 68% 0, 100% 50%, 68% 100%, 68% 78%, 0 78%);
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .path-card:last-child::after { display: none; }
+
+    .index-dot {
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--a, var(--lime));
+      font-size: 18px;
+      font-weight: 950;
+      margin-bottom: 20px;
+    }
+
+    .trust-gap-grid {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .gap-card {
+      min-height: 180px;
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: 5px 5px 0 var(--shadow);
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gap-card::after {
+      content: "";
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      width: 50px;
+      height: 50px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--a, var(--lime));
+      box-shadow: 4px 4px 0 #dfd8ca;
+    }
+
+    .trust-gap-slide {
+      padding: 38px 50px;
+    }
+
+    .trust-gap-slide .trust-gap-grid {
+      margin-top: 24px;
+      gap: 18px;
+    }
+
+    .trust-gap-slide .gap-card {
+      min-height: 140px;
+      padding: 20px;
+    }
+
+    .trust-gap-slide .gap-card h3 {
+      font-size: 22px !important;
+      margin-top: 14px !important;
+    }
+
+    .trust-gap-slide .gap-card .muted {
+      font-size: 12px;
+      margin-top: 10px !important;
+    }
+
+    .trust-gap-slide .gap-card::after {
+      width: 42px;
+      height: 42px;
+      right: 20px;
+      top: 20px;
+    }
+
+    .trust-gap-slide .bottom-note {
+      bottom: 28px;
+      font-size: 14px;
+    }
+
+    .vault-layout,
+    .shared-layer,
+    .loop-grid,
+    .network-layout,
+    .closing-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      height: 84%;
+      align-items: center;
+      margin-top: 32px;
+    }
+
+    .vault {
+      width: 390px;
+      height: 310px;
+      margin-left: auto;
+      border: 1.5px solid var(--line);
+      border-radius: 28px;
+      background: var(--paper);
+      box-shadow: 10px 10px 0 var(--shadow);
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .vault::before {
+      content: "";
+      position: absolute;
+      inset: 34px;
+      border: 1.5px dashed var(--line);
+      border-radius: 999px;
+    }
+
+    .vault-core {
+      width: 134px;
+      height: 134px;
+      border: 2px solid var(--line);
+      border-radius: 26px;
+      background: var(--lime);
+      display: grid;
+      place-items: center;
+      box-shadow: 6px 6px 0 #ded7cb;
+      position: relative;
+    }
+
+    .vault-core .bulb { transform: scale(1.35); }
+
+    .ring-node {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--a, var(--card));
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    .ring-node.top { top: 28px; left: 50%; transform: translateX(-50%); }
+    .ring-node.right { right: 30px; top: 50%; transform: translateY(-50%); }
+    .ring-node.bottom { bottom: 28px; left: 50%; transform: translateX(-50%); }
+    .ring-node.left { left: 30px; top: 50%; transform: translateY(-50%); }
+
+    .lock-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .lock-card {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 18px 20px;
+    }
+
+    .safety-slide {
+      padding: 38px 50px;
+    }
+
+    .safety-slide .vault-layout {
+      height: calc(100% - 72px);
+      margin-top: 18px;
+      gap: 44px;
+    }
+
+    .safety-slide h2[style] {
+      font-size: 28px;
+    }
+
+    .safety-slide .sub {
+      margin-top: 18px;
+      font-size: 18px;
+    }
+
+    .safety-slide .lock-stack {
+      gap: 12px;
+      margin-top: 22px !important;
+    }
+
+    .safety-slide .lock-card {
+      padding: 13px 16px;
+    }
+
+    .safety-slide .lock-card h3 {
+      font-size: 17px;
+    }
+
+    .safety-slide .lock-card .muted {
+      margin-top: 6px !important;
+      font-size: 12px;
+      line-height: 1.16;
+    }
+
+    .safety-slide .vault {
+      width: 330px;
+      height: 264px;
+    }
+
+    .safety-slide .vault-core {
+      width: 112px;
+      height: 112px;
+    }
+
+    .safety-slide .ring-node {
+      width: 50px;
+      height: 50px;
+    }
+
+    .product-panels {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .product-panel {
+      min-height: 240px;
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: 5px 5px 0 var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-panel .screen {
+      height: 78px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      margin-bottom: 22px;
+      padding: 14px;
+    }
+
+    .shared-layer { grid-template-columns: 1fr 360px; }
+
+    .value-slide {
+      grid-template-columns: minmax(0, 1.16fr) 350px;
+      gap: 46px;
+      height: calc(100% - 74px);
+      margin-top: 18px;
+      align-items: center;
+    }
+
+    .value-title {
+      font-size: 28px;
+      max-width: 560px;
+    }
+
+    .value-stack {
+      grid-template-columns: 1fr !important;
+      max-width: 540px !important;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .value-stack .mini-card {
+      min-height: 88px;
+      padding: 12px 18px;
+    }
+
+    .value-stack .mini-card .slash {
+      width: 25px;
+      height: 6px;
+      margin-bottom: 8px;
+    }
+
+    .value-stack .mini-card h3 {
+      font-size: 17px;
+    }
+
+    .value-stack .mini-card .muted {
+      margin-top: 6px !important;
+      font-size: 12px;
+      line-height: 1.16;
+    }
+
+    .value-slide .orbit {
+      width: 320px;
+      height: 320px;
+    }
+
+    .value-slide .core-record {
+      width: 124px;
+      height: 100px;
+    }
+
+    .value-slide .orbit-node {
+      width: 82px;
+      min-height: 48px;
+    }
+
+    .orbit {
+      width: 350px;
+      height: 350px;
+      border: 1.5px dashed var(--line);
+      border-radius: 999px;
+      position: relative;
+      margin-left: auto;
+    }
+
+    .core-record {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 138px;
+      height: 110px;
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      background: var(--lime);
+      box-shadow: 5px 5px 0 var(--shadow);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .orbit-node,
+    .network-node {
+      position: absolute;
+      width: 88px;
+      min-height: 52px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 8px;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .orbit-node.one { left: 50%; top: -10px; transform: translateX(-50%); background: var(--orange); color: var(--card); }
+    .orbit-node.two { right: -16px; top: 45%; transform: translateY(-50%); background: var(--blue); }
+    .orbit-node.three { left: 50%; bottom: -12px; transform: translateX(-50%); background: var(--mint); }
+    .orbit-node.four { left: -18px; top: 45%; transform: translateY(-50%); background: var(--lime-soft); }
+
+    .trust-density {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .density-card {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      padding: 18px;
+      box-shadow: 4px 4px 0 var(--shadow);
+      min-height: 112px;
+    }
+
+    .compound-loop {
+      width: 360px;
+      height: 360px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      margin-left: auto;
+      position: relative;
+      background: var(--paper);
+      box-shadow: 8px 8px 0 var(--shadow);
+    }
+
+    .compound-loop::before {
+      content: "Validated\A participation";
+      white-space: pre;
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 22px;
+      line-height: 1.05;
+      font-weight: 950;
+    }
+
+    .loop-node {
+      position: absolute;
+      width: 74px;
+      height: 74px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--a, var(--lime));
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 950;
+      padding: 8px;
+    }
+
+    .loop-node.top { left: 50%; top: -28px; transform: translateX(-50%); }
+    .loop-node.right { right: -28px; top: 50%; transform: translateY(-50%); }
+    .loop-node.bottom { left: 50%; bottom: -28px; transform: translateX(-50%); }
+    .loop-node.left { left: -28px; top: 50%; transform: translateY(-50%); }
+
+    .growth-slide {
+      padding: 40px 52px;
+    }
+
+    .growth-slide .loop-grid {
+      height: calc(100% - 76px);
+      margin-top: 18px;
+      gap: 44px;
+    }
+
+    .growth-slide h2[style] {
+      font-size: 30px;
+    }
+
+    .growth-slide .growth-box {
+      padding: 22px;
+    }
+
+    .growth-slide .signal {
+      margin: 8px 0 12px;
+    }
+
+    .growth-slide .compound-loop {
+      width: 316px;
+      height: 316px;
+    }
+
+    .growth-slide .loop-node {
+      width: 62px;
+      height: 62px;
+      font-size: 9.5px;
+    }
+
+    .growth-slide .loop-node.top { top: -22px; }
+    .growth-slide .loop-node.right { right: -22px; }
+    .growth-slide .loop-node.bottom { bottom: -22px; }
+    .growth-slide .loop-node.left { left: -22px; }
+
+    .dvf-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .score-card {
+      min-height: 310px;
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: 5px 5px 0 var(--shadow);
+      padding: 24px;
+    }
+
+    .score {
+      display: inline-block;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      background: var(--a, var(--lime));
+      padding: 10px 14px;
+      margin: 16px 0 18px;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .score-card ul,
+    .mini-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .score-card li::before,
+    .mini-list li::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 9px;
+      border-radius: 999px;
+      background: var(--a, var(--lime));
+      vertical-align: 1px;
+    }
+
+    .verdict-box {
+      margin-top: 28px;
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--lime-soft);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 16px 20px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .dvf-slide {
+      padding: 34px 46px;
+    }
+
+    .dvf-slide .dvf-heading {
+      font-size: 28px;
+      max-width: 760px;
+    }
+
+    .dvf-slide .dvf-grid {
+      margin-top: 16px;
+      gap: 16px;
+    }
+
+    .dvf-slide .score-card {
+      min-height: 248px;
+      padding: 16px;
+    }
+
+    .dvf-slide .score {
+      font-size: 22px;
+      margin: 10px 0 12px;
+      padding: 7px 11px;
+    }
+
+    .dvf-slide .score-card ul {
+      gap: 6px;
+      font-size: 10.5px;
+    }
+
+    .dvf-slide .verdict-box {
+      margin-top: 12px;
+      padding: 10px 14px;
+      font-size: 11.5px;
+    }
+
+    .compare-slide {
+      padding: 40px 52px;
+    }
+
+    .compare-slide .compare {
+      margin-top: 26px;
+      gap: 36px;
+    }
+
+    .compare-slide .comparison-card {
+      min-height: 286px;
+      padding: 26px;
+    }
+
+    .compare-slide .comparison-card ul {
+      margin-top: 22px;
+      gap: 12px;
+      font-size: 16px;
+    }
+
+    .compare-slide .tag-row {
+      bottom: 28px;
+    }
+
+    .network-layout { grid-template-columns: 1fr 440px; }
+
+    .network {
+      width: 430px;
+      height: 340px;
+      margin-left: auto;
+      border: 1.5px solid var(--line);
+      border-radius: 24px;
+      background: var(--paper);
+      box-shadow: 8px 8px 0 var(--shadow);
+      position: relative;
+    }
+
+    .network::before,
+    .network::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 310px;
+      height: 1.5px;
+      background: repeating-linear-gradient(90deg, var(--line), var(--line) 5px, transparent 5px, transparent 10px);
+      transform-origin: center;
+    }
+
+    .network::after { transform: translate(-50%, -50%) rotate(90deg); }
+    .network::before { transform: translate(-50%, -50%) rotate(0deg); }
+
+    .network .core-record {
+      width: 128px;
+      height: 98px;
+      z-index: 2;
+    }
+
+    .network-node { z-index: 3; }
+    .network-node.a { left: 28px; top: 32px; background: var(--orange); color: var(--card); }
+    .network-node.b { right: 30px; top: 34px; background: var(--blue); }
+    .network-node.c { right: 26px; bottom: 36px; background: var(--lime); }
+    .network-node.d { left: 26px; bottom: 36px; background: var(--mint); }
+    .network-node.e { left: 50%; top: 8px; transform: translateX(-50%); background: var(--card); }
+
+    .final-path {
+      display: grid;
+      gap: 16px;
+    }
+
+    .milestone {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .milestone .num {
+      width: 42px;
+      height: 42px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      background: var(--a, var(--lime));
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+    }
+
+    .closing-slide {
+      padding: 40px 52px;
+    }
+
+    .closing-slide h1 {
+      font-size: 48px;
+      max-width: 540px;
+    }
+
+    .closing-slide .sub {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    .closing-slide .label-card {
+      margin-top: 30px;
+      padding: 15px 18px;
+    }
+
+    .closing-slide .final-path {
+      gap: 10px;
+    }
+
+    .closing-slide .milestone {
+      padding: 10px 14px;
+      grid-template-columns: 38px 1fr;
+      gap: 10px;
+    }
+
+    .closing-slide .milestone .num {
+      width: 34px;
+      height: 34px;
+    }
+
+    .closing-slide .milestone h3 {
+      font-size: 16px;
+    }
+
+    .closing-slide .milestone .muted {
+      font-size: 11px;
+    }
+
+    .thank-you-slide {
+      padding: 52px 58px;
+    }
+
+    .thank-you-layout {
+      display: grid;
+      grid-template-columns: 1fr 370px;
+      gap: 70px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .thank-you-slide h1 {
+      font-size: 78px;
+      line-height: .9;
+      max-width: 620px;
+    }
+
+    .thank-you-slide .sub {
+      max-width: 560px;
+    }
+
+    .thank-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .thank-card {
+      margin-top: 44px;
+      width: min(100%, 560px);
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: 5px 5px 0 var(--shadow);
+      padding: 20px 22px;
+    }
+
+    .thank-visual {
+      width: 350px;
+      height: 350px;
+      border: 1.5px solid var(--line);
+      border-radius: 28px;
+      background: var(--paper);
+      box-shadow: 8px 8px 0 var(--shadow);
+      position: relative;
+      margin-left: auto;
+      display: grid;
+      place-items: center;
+    }
+
+    .thank-visual::before {
+      content: "";
+      position: absolute;
+      inset: 38px;
+      border: 1.5px dashed var(--line);
+      border-radius: 999px;
+    }
+
+    .thank-core {
+      width: 148px;
+      height: 148px;
+      border: 2px solid var(--line);
+      border-radius: 22px;
+      background: var(--lime);
+      box-shadow: 6px 6px 0 #ded7cb;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 17px;
+      line-height: 1;
+      font-weight: 950;
+      z-index: 2;
+    }
+
+    .thank-node {
+      position: absolute;
+      width: 76px;
+      height: 48px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--a, var(--card));
+      box-shadow: 4px 4px 0 var(--shadow);
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 950;
+      z-index: 3;
+    }
+
+    .thank-node.top { top: 28px; left: 50%; transform: translateX(-50%); }
+    .thank-node.right { right: 22px; top: 50%; transform: translateY(-50%); }
+    .thank-node.bottom { bottom: 28px; left: 50%; transform: translateX(-50%); }
+    .thank-node.left { left: 22px; top: 50%; transform: translateY(-50%); }
+
+    @media (max-width: 920px) {
+      .rail, .topbar { display: none; }
+      .scene { padding: 26px 14px; min-height: auto; }
+      .slide {
+        width: 100%;
+        min-height: 760px;
+        aspect-ratio: auto;
+        max-height: none;
+        padding: 34px 24px;
+        border-radius: 22px;
+      }
+      h1 { font-size: 42px; max-width: none; }
+      h2 { font-size: 28px; }
+      .sub { font-size: 18px; }
+      .layout-2,
+      .trust-layout,
+      .system-diagram,
+      .flywheel,
+      .compare {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .phone { width: 300px; height: 500px; margin: 0 auto; }
+      .wheel { width: 260px; height: 260px; }
+      .wheel-node { width: 48px; height: 48px; }
+      .problem-grid,
+      .value-cards,
+      .growth-cards,
+      .quad,
+      .timeline,
+      .pathway,
+      .idea-map,
+      .framework-grid.cols-2,
+      .framework-grid.cols-3,
+      .framework-grid.cols-4,
+      .framework-grid.cols-5,
+      .platform-table,
+      .flow-strip,
+      .tier-ladder,
+      .metric-bars,
+      .trust-gap-grid,
+      .product-panels,
+      .trust-density,
+      .dvf-grid {
+        grid-template-columns: 1fr;
+      }
+      .path-card::after { display: none; }
+      .vault-layout,
+      .shared-layer,
+      .loop-grid,
+      .network-layout,
+      .closing-layout,
+      .idea-overview,
+      .thank-you-layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        height: auto;
+        align-items: start;
+      }
+      .idea-map::before { display: none; }
+      .idea-map { min-height: auto; }
+      .idea-step { min-height: 132px; }
+      .flow-step::after { display: none; }
+      .trust-layout,
+      .safety-slide .vault-layout,
+      .value-slide,
+      .growth-slide .loop-grid {
+        height: auto;
+        align-items: start;
+      }
+      .vault,
+      .orbit,
+      .compound-loop,
+      .network {
+        width: min(100%, 390px);
+        margin: 0 auto;
+      }
+      .orbit {
+        width: min(100%, 320px);
+        height: 320px;
+      }
+      .orbit-node.one { top: 0; }
+      .orbit-node.two { right: 0; }
+      .orbit-node.three { bottom: 0; }
+      .orbit-node.four { left: 0; }
+      .compound-loop {
+        width: min(100%, 300px);
+        height: 300px;
+      }
+      .growth-slide .loop-node.top { top: -8px; }
+      .growth-slide .loop-node.right { right: -8px; }
+      .growth-slide .loop-node.bottom { bottom: -8px; }
+      .growth-slide .loop-node.left { left: -8px; }
+      .network { height: 340px; }
+      .thank-you-slide h1 { font-size: 54px; }
+      .thank-visual {
+        width: min(100%, 330px);
+        height: 330px;
+        margin: 0 auto;
+      }
+      .eco-flow {
+        grid-template-columns: 1fr;
+      }
+      .arrow { transform: rotate(90deg); justify-self: center; width: 34px; }
+      .label-card { width: 100%; }
+      .signal-box, .growth-box { width: 100%; }
+      .tag-row { position: static; margin-top: 28px; flex-wrap: wrap; }
+      .bottom-note, .cta-strip { position: static; margin-top: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="rail" aria-label="Slide navigation">
+    <a href="#s1" aria-label="Slide 1"></a>
+    <a href="#s2" aria-label="Slide 2"></a>
+    <a href="#s3" aria-label="Slide 3"></a>
+    <a href="#s4" aria-label="Slide 4"></a>
+    <a href="#s5" aria-label="Slide 5"></a>
+    <a href="#s6" aria-label="Slide 6"></a>
+    <a href="#s7" aria-label="Slide 7"></a>
+    <a href="#s8" aria-label="Slide 8"></a>
+    <a href="#s9" aria-label="Slide 9"></a>
+    <a href="#s10" aria-label="Slide 10"></a>
+    <a href="#s11" aria-label="Slide 11"></a>
+    <a href="#s12" aria-label="Slide 12"></a>
+    <a href="#s13" aria-label="Slide 13"></a>
+    <a href="#s14" aria-label="Slide 14"></a>
+    <a href="#s15" aria-label="Slide 15"></a>
+  </nav>
+
+  <div class="topbar"><span class="mark"></span> Ownza - Student Innovation Continuation Framework</div>
+
+  <main>
+    <section class="scene" id="s1">
+      <article class="slide hero-slide">
+        <div class="layout-2">
+          <div>
+            <h1><span class="accent"></span>Why do student innovations die before becoming real?</h1>
+            <p class="sub">Ownza is a trusted continuation ecosystem for student innovation.</p>
+            <div class="label-card">
+              <h3>Ownza</h3>
+              <p class="muted" style="margin-top:12px">Safe innovation continuation for students.</p>
+            </div>
+            <div class="source-strip"><span class="pill lime">Protection</span><span class="pill">Validation</span><span class="pill blue">Execution</span></div>
+          </div>
+          <div class="phone" aria-label="Ownza product mockup">
+            <div class="phone-head"><div class="dot-row"><span class="dot orange"></span><span class="dot blue"></span><span class="dot"></span></div><span>OWNZA</span></div>
+            <div class="notify"><div class="bulb"></div><div><div class="ui-line"></div><div class="ui-line thin"></div><p class="tiny">Student idea</p></div></div>
+            <div class="notify"><div class="doc"></div><div><div class="ui-line"></div><div class="ui-line thin"></div><p class="tiny">Proof and context</p></div></div>
+            <div class="lime-block"><h3>Continuation record</h3><div class="progress" style="margin-top:22px"><span style="--w:76%;--c:var(--dark)"></span></div></div>
+            <div class="phone-bottom"><div class="icon-tile"><div class="person"><span class="base" style="--accent:var(--orange)"></span></div></div><div class="icon-tile"><div class="dot-row"><span class="dot blue" style="width:22px;height:22px"></span><span class="dot" style="width:22px;height:22px;background:var(--card)"></span></div></div></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s2">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>The continuation gap</h2>
+        <h2 class="framework-title">If students have ideas, why do they not continue building?</h2>
+        <div class="framework-grid cols-3">
+          <div class="framework-card" style="--a:var(--orange)"><div class="slash"></div><h3>No path after events</h3><p class="muted">Hackathons and classes create starts, but weak follow-through.</p></div>
+          <div class="framework-card" style="--a:var(--blue)"><div class="slash"></div><h3>Mentorship drops off</h3><p class="muted">Feedback rarely becomes structured next steps.</p></div>
+          <div class="framework-card" style="--a:var(--lime)"><div class="slash"></div><h3>Funding feels risky</h3><p class="muted">Backers lack proof, visibility, and milestone confidence.</p></div>
+          <div class="framework-card paper" style="--a:var(--mint)"><div class="slash"></div><h3>Idea theft fear</h3><p class="muted">Students hesitate to share without ownership protection.</p></div>
+          <div class="framework-card paper" style="--a:var(--orange)"><div class="slash"></div><h3>No collaboration layer</h3><p class="muted">Co-builders and skills are hard to discover safely.</p></div>
+          <div class="framework-card dark-card" style="--a:var(--lime)"><div class="slash"></div><h3>Core truth</h3><p class="muted">Students do not stop because they lack ideas. They stop because they lack safe continuation systems.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s3">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Platform gap</h2>
+        <h2 class="framework-title">Why are existing platforms not solving this?</h2>
+        <div class="platform-table">
+          <div class="platform-cell" style="--a:var(--blue)"><p class="tiny">Platform</p><h3>LinkedIn</h3><p class="muted">Networking first, not protected innovation continuation.</p></div>
+          <div class="platform-cell" style="--a:var(--orange)"><p class="tiny">Platform</p><h3>Instagram</h3><p class="muted">Engagement focused, not proof or execution focused.</p></div>
+          <div class="platform-cell" style="--a:var(--mint)"><p class="tiny">Platform</p><h3>GitHub</h3><p class="muted">Useful for technical builders, limited for non-technical innovators.</p></div>
+          <div class="platform-cell" style="--a:var(--lime)"><p class="tiny">Platform</p><h3>Hackathons</h3><p class="muted">Temporary energy, weak continuation after the event.</p></div>
+        </div>
+        <div class="framework-note">No platform currently gives students a trusted pathway from idea to execution.</div>
+      </article>
+    </section>
+
+    <section class="scene" id="s4">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Trusted ecosystem</h2>
+        <h2 class="framework-title">What if student innovation had its own trusted ecosystem?</h2>
+        <div class="flow-strip">
+          <div class="flow-step" style="--a:var(--orange)"><div class="num">1</div><h3>Idea</h3><p class="muted">Not just posting.</p></div>
+          <div class="flow-step" style="--a:var(--blue)"><div class="num">2</div><h3>Validation</h3><p class="muted">Mentor signal.</p></div>
+          <div class="flow-step" style="--a:var(--lime)"><div class="num">3</div><h3>Mentorship</h3><p class="muted">Structured next steps.</p></div>
+          <div class="flow-step" style="--a:var(--mint)"><div class="num">4</div><h3>Collaboration</h3><p class="muted">Safe co-builders.</p></div>
+          <div class="flow-step" style="--a:var(--orange)"><div class="num">5</div><h3>Funding</h3><p class="muted">Milestone support.</p></div>
+          <div class="flow-step" style="--a:var(--blue)"><div class="num">6</div><h3>Execution</h3><p class="muted">Tracked progress.</p></div>
+        </div>
+        <div class="framework-note">Ownza is continuation infrastructure, not a social platform for ideas.</div>
+      </article>
+    </section>
+
+    <section class="scene" id="s5">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Operating model</h2>
+        <h2 class="framework-title">How does the ecosystem actually function?</h2>
+        <div class="flow-strip">
+          <div class="flow-step" style="--a:var(--orange)"><div class="num">1</div><h3>Upload</h3><p class="muted">Idea with proof and context.</p></div>
+          <div class="flow-step" style="--a:var(--blue)"><div class="num">2</div><h3>Screen</h3><p class="muted">Seriousness and quality.</p></div>
+          <div class="flow-step" style="--a:var(--lime)"><div class="num">3</div><h3>Review</h3><p class="muted">Mentor feasibility signal.</p></div>
+          <div class="flow-step" style="--a:var(--mint)"><div class="num">4</div><h3>Protect</h3><p class="muted">Ownership and visibility controls.</p></div>
+          <div class="flow-step" style="--a:var(--orange)"><div class="num">5</div><h3>Unlock</h3><p class="muted">Funding by validation.</p></div>
+          <div class="flow-step" style="--a:var(--blue)"><div class="num">6</div><h3>Track</h3><p class="muted">Execution milestones.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s6">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Trust and ownership</h2>
+        <h2 class="framework-title">How do we build trust for students and backers?</h2>
+        <div class="framework-grid cols-3">
+          <div class="framework-card" style="--a:var(--lime)"><div class="slash"></div><h3>Student verification</h3><p class="muted">Campus-backed identity and accountability.</p></div>
+          <div class="framework-card" style="--a:var(--orange)"><div class="slash"></div><h3>Timestamped proof</h3><p class="muted">Ownership proof and version history.</p></div>
+          <div class="framework-card" style="--a:var(--blue)"><div class="slash"></div><h3>NDA-based access</h3><p class="muted">Review without uncontrolled exposure.</p></div>
+          <div class="framework-card paper" style="--a:var(--mint)"><div class="slash"></div><h3>Controlled visibility</h3><p class="muted">Students choose what different actors can see.</p></div>
+          <div class="framework-card paper" style="--a:var(--lime)"><div class="slash"></div><h3>Access logging</h3><p class="muted">Every view and review leaves a trail.</p></div>
+          <div class="framework-card dark-card" style="--a:var(--orange)"><div class="slash"></div><h3>Accountability</h3><p class="muted">We provide accountability and proof, not false promises.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s7">
+      <article class="slide framework-slide builder-slide">
+        <h2><span class="accent"></span>Builder filter</h2>
+        <h2 class="framework-title">Filter serious builders, not idea dumps.</h2>
+        <div class="tier-ladder">
+          <div>
+            <div class="tier-row" style="--a:var(--orange)"><div class="tier-badge">Tier 1</div><div><h3>Exploration</h3><p class="muted">Credible idea enters.</p></div></div>
+            <div class="tier-row" style="--a:var(--blue)"><div class="tier-badge">Tier 2</div><div><h3>Validated concept</h3><p class="muted">Screening creates signal.</p></div></div>
+            <div class="tier-row" style="--a:var(--lime)"><div class="tier-badge">Tier 3</div><div><h3>Execution ready</h3><p class="muted">Readiness unlocks visibility.</p></div></div>
+          </div>
+          <div class="idea-map" aria-label="Validation gate flow"><div class="idea-step" style="--a:var(--orange)"><div class="idea-icon">1</div><h3>Submit</h3></div><div class="idea-step" style="--a:var(--blue)"><div class="idea-icon">2</div><h3>Screen</h3></div><div class="idea-step" style="--a:var(--lime)"><div class="idea-icon">3</div><h3>Review</h3></div><div class="idea-step" style="--a:var(--mint)"><div class="idea-icon">4</div><h3>Unlock tier</h3></div></div>
+        </div>
+        <div class="framework-note">Visibility is earned, not automatic.</div>
+      </article>
+    </section>
+
+    <section class="scene" id="s8">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Builder signal</h2>
+        <h2 class="framework-title">How do we measure real builders instead of popularity?</h2>
+        <div class="metric-bars">
+          <div class="metric" style="--c:var(--orange)"><h3>Milestone completion</h3><div class="progress"><span style="--w:80%;--c:var(--orange)"></span></div></div>
+          <div class="metric" style="--c:var(--blue)"><h3>Project updates</h3><div class="progress"><span style="--w:70%;--c:var(--blue)"></span></div></div>
+          <div class="metric" style="--c:var(--lime)"><h3>Prototype progress</h3><div class="progress"><span style="--w:74%;--c:var(--lime)"></span></div></div>
+          <div class="metric" style="--c:var(--mint)"><h3>User testing and feedback</h3><div class="progress"><span style="--w:66%;--c:var(--mint)"></span></div></div>
+          <div class="metric" style="--c:var(--blue)"><h3>Mentor responsiveness</h3><div class="progress"><span style="--w:72%;--c:var(--blue)"></span></div></div>
+          <div class="metric" style="--c:var(--orange)"><h3>Execution proof</h3><div class="progress"><span style="--w:84%;--c:var(--orange)"></span></div></div>
+        </div>
+        <div class="framework-note">Execution proof over vanity metrics.</div>
+      </article>
+    </section>
+
+    <section class="scene" id="s9">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Continuation support</h2>
+        <h2 class="framework-title">How do students actually continue building?</h2>
+        <div class="framework-grid cols-5">
+          <div class="framework-card" style="--a:var(--blue)"><div class="slash"></div><h3>Mentor feedback</h3><p class="muted">Structured, attached, and actionable.</p></div>
+          <div class="framework-card" style="--a:var(--lime)"><div class="slash"></div><h3>Skill matching</h3><p class="muted">Collaborators by project need.</p></div>
+          <div class="framework-card" style="--a:var(--orange)"><div class="slash"></div><h3>Campus community</h3><p class="muted">Dense student builder network.</p></div>
+          <div class="framework-card" style="--a:var(--mint)"><div class="slash"></div><h3>Co-builder discovery</h3><p class="muted">Find people without overexposure.</p></div>
+          <div class="framework-card dark-card" style="--a:var(--lime)"><div class="slash"></div><h3>Guided next steps</h3><p class="muted">The record keeps the path alive.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s10">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Safer funding</h2>
+        <h2 class="framework-title">How can funding become safer for everyone?</h2>
+        <div class="framework-grid cols-2">
+          <div class="framework-card paper" style="--a:var(--orange)"><div class="slash"></div><h3>The risk today</h3><p class="muted">Fake founders, fund misuse, and no progress visibility make early support feel risky.</p></div>
+          <div class="framework-card paper" style="--a:var(--lime)"><div class="slash"></div><h3>The Ownza shift</h3><p class="muted">Mentor-reviewed projects, risk signal, and milestone-based release reduce blind funding.</p></div>
+        </div>
+        <div class="flow-strip" style="grid-template-columns:repeat(5,1fr)">
+          <div class="flow-step" style="--a:var(--blue)"><div class="num">1</div><h3>Review</h3></div>
+          <div class="flow-step" style="--a:var(--lime)"><div class="num">2</div><h3>Validate</h3></div>
+          <div class="flow-step" style="--a:var(--orange)"><div class="num">3</div><h3>Fund</h3></div>
+          <div class="flow-step" style="--a:var(--mint)"><div class="num">4</div><h3>Verify</h3></div>
+          <div class="flow-step" style="--a:var(--lime)"><div class="num">5</div><h3>Unlock next</h3></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s11">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>Why Ownza wins</h2>
+        <h2 class="framework-title">Why is this better than existing innovation platforms?</h2>
+        <div class="compare">
+          <div class="comparison-card"><h2>Most platforms</h2><ul><li>Optimize for visibility</li><li>Reward popularity</li><li>Offer weak ownership proof</li><li>Leave execution untracked</li></ul></div>
+          <div class="comparison-card after"><h2>Ownza</h2><span class="protected-badge">Continuation</span><ul><li>Trust and ownership proof</li><li>Tiered validation</li><li>Mentorship loops</li><li>Execution tracking</li><li>Safe collaboration</li></ul></div>
+        </div>
+        <div class="framework-note">Most platforms optimize for visibility. We optimize for continuation.</div>
+      </article>
+    </section>
+
+    <section class="scene" id="s12">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>University-first rollout</h2>
+        <h2 class="framework-title">Why start with universities first?</h2>
+        <div class="framework-grid cols-5">
+          <div class="framework-card" style="--a:var(--lime)"><div class="slash"></div><h3>Verification</h3><p class="muted">Student identity is easier to confirm.</p></div>
+          <div class="framework-card" style="--a:var(--blue)"><div class="slash"></div><h3>Trust</h3><p class="muted">Institutional context supports credibility.</p></div>
+          <div class="framework-card" style="--a:var(--orange)"><div class="slash"></div><h3>Moderation</h3><p class="muted">Campus systems help keep quality high.</p></div>
+          <div class="framework-card" style="--a:var(--mint)"><div class="slash"></div><h3>Mentor access</h3><p class="muted">Faculty and alumni can review early.</p></div>
+          <div class="framework-card dark-card" style="--a:var(--lime)"><div class="slash"></div><h3>Pilot speed</h3><p class="muted">Dense builder communities accelerate adoption.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s13">
+      <article class="slide framework-slide">
+        <h2><span class="accent"></span>MVP scope</h2>
+        <h2 class="framework-title">What are we building first?</h2>
+        <div class="framework-grid cols-3">
+          <div class="framework-card" style="--a:var(--orange)"><div class="slash"></div><h3>Idea upload</h3><p class="muted">Problem, solution, evidence, and context.</p></div>
+          <div class="framework-card" style="--a:var(--lime)"><div class="slash"></div><h3>Student verification</h3><p class="muted">Campus-first identity layer.</p></div>
+          <div class="framework-card" style="--a:var(--blue)"><div class="slash"></div><h3>Validation scoring</h3><p class="muted">Originality, feasibility, and next steps.</p></div>
+          <div class="framework-card paper" style="--a:var(--mint)"><div class="slash"></div><h3>Mentor routing</h3><p class="muted">Match projects to useful reviewers.</p></div>
+          <div class="framework-card paper" style="--a:var(--orange)"><div class="slash"></div><h3>Ownership proof</h3><p class="muted">Timestamped record and version history.</p></div>
+          <div class="framework-card dark-card" style="--a:var(--lime)"><div class="slash"></div><h3>Access logging</h3><p class="muted">Controlled visibility and review trail.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="scene" id="s14">
+      <article class="slide dark chain-slide">
+        <h2><span class="accent"></span>What could this become?</h2>
+        <div class="flywheel">
+          <div class="wheel"><div class="wheel-node top" style="--a:var(--lime)"><span>Campus</span></div><div class="wheel-node right" style="--a:var(--blue)"><span>Network</span></div><div class="wheel-node bottom" style="--a:var(--orange)"><span>Pipeline</span></div><div class="wheel-node left" style="--a:var(--mint)"><span>Graph</span></div></div>
+          <div class="chain-list"><div class="chain-item"><span class="dot"></span>National student innovation infrastructure.</div><div class="chain-item"><span class="dot blue"></span>Global student innovation network.</div><div class="chain-item"><span class="dot orange"></span>Startup pipeline ecosystem.</div><div class="chain-item"><span class="dot mint"></span>Trusted innovation graph.</div></div>
+        </div>
+        <div class="cta-strip">Infrastructure for safe innovation continuation.</div>
+      </article>
+    </section>
+
+    <section class="scene" id="s15">
+      <article class="slide thank-you-slide">
+        <div class="thank-you-layout">
+          <div><h1><span class="accent"></span>Thank you.</h1><p class="sub">Ownza is not building a platform for posting ideas. It is building infrastructure for safe innovation continuation.</p><div class="thank-actions"><span class="pill lime">Proof</span><span class="pill">Validation</span><span class="pill blue">Milestones</span><span class="pill orange">Execution</span></div><div class="thank-card"><h3>Next step</h3><p class="muted" style="margin-top:10px">Pilot with universities first, validate serious builders, and expand into milestone-based backer support.</p></div></div>
+          <div class="thank-visual" aria-label="Ownza closing trust network"><div class="thank-node top" style="--a:var(--orange);color:var(--card)">Students</div><div class="thank-node right" style="--a:var(--blue)">Mentors</div><div class="thank-node bottom" style="--a:var(--mint)">Campus</div><div class="thank-node left" style="--a:var(--lime-soft)">Backers</div><div class="thank-core">Continue<br>ideas</div></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const slides = [...document.querySelectorAll(".scene")];
+    const dots = [...document.querySelectorAll(".rail a")];
+
+    const observer = new IntersectionObserver((entries) => {
+      const active = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!active) return;
+      const index = slides.indexOf(active.target);
+      dots.forEach((dot, i) => dot.style.background = i === index ? "var(--lime)" : "var(--card)");
+    }, { threshold: [0.58, 0.72] });
+
+    slides.forEach((slide) => observer.observe(slide));
+
+    window.addEventListener("keydown", (event) => {
+      if (!["ArrowDown", "ArrowUp", "PageDown", "PageUp"].includes(event.key)) return;
+      const current = slides.findIndex((slide) => {
+        const rect = slide.getBoundingClientRect();
+        return rect.top <= window.innerHeight * .5 && rect.bottom >= window.innerHeight * .5;
+      });
+      const direction = event.key.includes("Down") ? 1 : -1;
+      const next = Math.max(0, Math.min(slides.length - 1, current + direction));
+      slides[next]?.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+Slide rhythm plan:
+1. Cover card with right-side phone/product mockup.
+2. Problem statement with three stat cards plus student icon row.
+3. Trust-layer product system with two claim cards and validation illustration.
+4. Six-step horizontal workflow timeline.
+5. Stakeholder value proposition plus qualitative signal bars.
+6. Failure/recovery quadrant map with dotted restart paths.
+7. Business sustainability ecosystem flow.
+8. Sparse progress-bar growth dashboard plus DVF verdict.
+9. Only dark slide: compounding chain/flywheel.
+10. Before/after comparison with protected continuation state.
+
+Macro-layout families:
+- Cover/product mockup.
+- Stat-card and character/icon row.
+- Product system diagram.
+- Timeline strip.
+- Signal-bar dashboard.
+- Quadrant/recovery map.
+- Ecosystem flow.
+- Dark flywheel.
+- Two-column comparison.
+
+Design guardrails:
+- White rounded cards on warm off-white background.
+- Faux soft shadows are editable offset shapes, not raster effects.
+- Acid lime, orange, blue, and mint are used as small semantic accents.
+- No decorative blobs, gradients, photos, screenshots, or placeholder copy.

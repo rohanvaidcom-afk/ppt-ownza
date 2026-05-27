@@ -1,0 +1,26 @@
+Task mode: create
+Primary profile: product-platform
+Secondary gates: investor-ready startup narrative; no unsupported metrics; no stock, web, or AI-generated raster imagery.
+
+Required proof objects:
+- Platform workflow architecture: verify, upload, protect, review, match, continue.
+- Customer journey/problem visual: post-hackathon continuation drop-off and recovery.
+- Multi-sided ecosystem map: students, universities, mentors, backers.
+- Product-to-sustainability linkage: campus licenses, sponsored challenges, premium mentorship/backer access.
+- Growth loop: protected ideas, mentor validation, milestone funding, continuation.
+
+Source/asset requirements:
+- Use only editable PowerPoint text, shapes, cards, charts, icons, and vector-style illustrations.
+- No stock images, generated raster images, web images, logos, or fabricated metrics.
+
+Brand/authenticity constraints:
+- No third-party brand marks.
+- All icons are generic hand-built vector symbols from shapes and lines.
+
+Profile-specific QA gates:
+- Show the product system, not generic feature cards.
+- Connect every diagram primitive to continuation, validation, access, trust, or sustainability.
+- Ensure connectors attach visually and labels are specific to student innovation continuation.
+
+Known missing inputs:
+- Attached reference image is not present as a local file in the workspace; style is followed from the prompt description.
